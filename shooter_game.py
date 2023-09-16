@@ -26,6 +26,7 @@ pygame.mixer.music.play()
 
 pygame.font.init()
 font1 = pygame.font.Font(None,36)
+font2 = pygame.font.Font(None,56)
 bullets = pygame.sprite.Group()
 faire_saind = pygame.mixer.Sound("fire.ogg")
 
@@ -118,6 +119,29 @@ while run:
         bullets.draw(w)
         text_l = font1.render("Пропущено "+ str(lost),True,(255,50,250))
         w.blit(text_l, (0,0))
+
+        killed_enemies = pygame.sprite.groupcollide(
+                        enemies,bullets,True,True
+        )
+        for ke in killed_enemies:
+            score += 1
+            new_enemi = Enemy("ufo.png",randint(10,WIDTH-60),0,(70,50),randint(2,6))
+            enemies.add(new_enemi)
+        text_s = font1.render("Збито "+ str(score),True,(255,50,250))
+        w.blit(text_s, (0,30))
+
+        if lost > 3 or pygame.sprite.spritecollide(ship,enemies,False) :
+            text_lus = font2.render("Програв",True,(255,50,250))
+            w.blit(text_lus, (WIDTH/2,HEIGHT/2))
+            fin = True
+        if score > 5:
+            text_w = font2.render("Виграв ",True,(255,50,250))
+            w.blit(text_w, (WIDTH/2,HEIGHT/2))
+            fin = True
+
+
+
+
 
     pygame.display.update()
     clock.tick(FPS)
