@@ -123,6 +123,15 @@ while run:
         killed_enemies = pygame.sprite.groupcollide(
                         enemies,bullets,True,True
         )
+        #дотачи можливісь збити астероїдів
+        kiled_asteroid = pygame.sprite.groupcollide(asteroids,bullets,True,True)
+
+        for ki in kiled_asteroid:
+            new_aster = Enemy("asteroid.png",randint(10,WIDTH-60),0,(70,50),2)
+            enemies.add(new_enemi)
+
+
+        
         for ke in killed_enemies:
             score += 1
             new_enemi = Enemy("ufo.png",randint(10,WIDTH-60),0,(70,50),randint(2,6))
